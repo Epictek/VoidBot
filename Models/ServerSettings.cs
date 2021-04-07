@@ -9,5 +9,7 @@ namespace VoidBot
         public List<ulong> ExperienceBlacklistedChannels { get; set; }
         public List<string> BlacklistedWords { get; set; }
         public List<string> BlacklistedUsernames { get; set; }
+        public Dictionary<ulong, long> RoleLevels { get; set; }
+
     }
 }

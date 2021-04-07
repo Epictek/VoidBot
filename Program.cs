@@ -46,7 +46,11 @@ namespace VoidBot
 
             var slash = _discord.UseSlashCommands();
             slash.RegisterCommands<XbpsSlashCommands>(323558395414183936);
+            slash.RegisterCommands<LevelCommands>(323558395414183936);
+            slash.RegisterCommands<ModerationCommands>(323558395414183936);
+            slash.RegisterCommands<MiscCommands>(323558395414183936);
 
+            
             await _discord.ConnectAsync();
 
             _discord.Ready += (sender, eventArgs) =>
@@ -57,7 +61,7 @@ namespace VoidBot
 
             
             LevelingSystem.Init(_discord);
-            
+            DiscordLogger.Init(_discord);
             await Task.Delay(-1);
         }
 
@@ -80,4 +84,5 @@ namespace VoidBot
 
         
     }
+    
 }

@@ -209,6 +209,62 @@ namespace VoidBot
             await ctx.EditResponseAsync(new DiscordWebhookBuilder().WithContent("User not found in database"));
         }
         
+        public static async Task EditLevelRole(InteractionContext ctx, DiscordRole role, long level)
+        {
+            await ctx.CreateResponseAsync(InteractionResponseType.DeferredChannelMessageWithSource);
+
+            var usr = await ctx.Guild.GetMemberAsync(ctx.User.Id);
+            var perms = (usr.PermissionsIn(ctx.Channel) & Permissions.BanMembers) != 0;
+
+            if (!perms)
+            {
+                await ctx.DeleteResponseAsync();
+                return;
+            }
+            
+            using var db = new LiteDatabase(@$"global.db");
+            var col = db.GetCollection<ServerSettings>("servers");
+
+            var server = col.FindOne(x => x.Id == ctx.Guild.Id);
+            if (server == null)
+            {
+                server = new ServerSettings()
+                {
+                    Id = ctx.Guild.Id
+                };
+                col.Insert(server);
+            }
+
+            if (level == -1)
+            {
+                if (server.RoleLevels.ContainsKey(role.Id))
+                {
+                    await ctx.EditResponseAsync(new DiscordWebhookBuilder().WithContent("Role level removed"));
+                }
+                else
+                {
+                    await ctx.EditResponseAsync(new DiscordWebhookBuilder().WithContent("Role level does not exist"));
+                }
+            } else if (level > 0)
+            {
+
+                server.RoleLevels ??= new Dictionary<ulong, long>();
+                if (server.RoleLevels.TryAdd(role.Id, level))
+                {
+                    await ctx.EditResponseAsync(new DiscordWebhookBuilder().WithContent("Role level added"));
+                }
+                else
+                {
+                    await ctx.EditResponseAsync(new DiscordWebhookBuilder().WithContent("Role level already exists"));
+                }
+            }
+            else
+            {
+                await ctx.DeleteResponseAsync();
+            }
+
+            col.Update(server);
+        }
         
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
