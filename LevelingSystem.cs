@@ -201,7 +201,7 @@ namespace VoidBot
             {
                 userData.MessageCount = 0;
                 userData.Level = 0;
-
+                col.Update(userData);
                 await ctx.EditResponseAsync(new DiscordWebhookBuilder().WithContent("Users level reset"));
                 return;
             }

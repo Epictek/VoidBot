@@ -22,6 +22,13 @@ namespace VoidBot
         [JsonProperty("short_desc")] public string ShortDesc { get; set; }
     }
     
+    public class ArchResponse
+    {
+        [JsonProperty("data")]
+        public string[] Data { get; set; }
+    }
+
+    
     public class PackageResponse
     {
         [JsonProperty("data")]

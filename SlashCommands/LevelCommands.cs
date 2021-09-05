@@ -1,11 +1,10 @@
 using System.Threading.Tasks;
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
-using DSharpPlus.SlashCommands.Attributes;
 
 namespace VoidBot.Commands
 {
-    public class LevelCommands : SlashCommandModule
+    public class LevelCommands : ApplicationCommandModule
     {
         [SlashCommandGroup("levels", "level commands")]
         public class Levels
