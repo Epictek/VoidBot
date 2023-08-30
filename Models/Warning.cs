@@ -1,6 +1,5 @@
 using System;
 using DSharpPlus.Entities;
-using Nanoid;
 namespace VoidBot
 {
     public class Warning

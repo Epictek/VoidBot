@@ -222,7 +222,7 @@ namespace VoidBot.Commands
             {
                 await ctx.DeleteResponseAsync();
                 await using var stringStream = response.Result.ToStream();
-                await ctx.Channel.SendMessageAsync(new DiscordMessageBuilder().WithFile("bashoutput.log", stringStream));
+                await ctx.Channel.SendMessageAsync(new DiscordMessageBuilder().AddFile("bashoutput.log", stringStream));
                 return;
             }
             
